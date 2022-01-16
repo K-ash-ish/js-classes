@@ -54,13 +54,20 @@ class ShoppingCart extends Component{
     this.items.push(product);
     this.total.innerHTML = `<h2>Total : \$ ${this.totalAmount.toFixed(2)}</h2>`
   }
-
+  addOrder(){
+    console.log("Ordering...")
+    console.log(this.items);
+  }
   render(){
     const cartEl = this.createComponent("section", "cart" );    
     cartEl.innerHTML = `
       <h2>Total : \${0}</h2>
       <button>Order Now!</button>
     `;
+    const orderBtn = cartEl.querySelector("button");
+    // orderBtn.addEventListener("click", this.addOrder.bind(this.items));
+    orderBtn.addEventListener("click", ()=> this.addOrder());
+    // orderBtn.addEventListener("click", this.addOrder);
     this.total = cartEl.querySelector("h2");
   }
 }
@@ -96,7 +103,8 @@ class ProductItem extends Component{
 }
 
 class ProductList extends Component {
-  products = [
+  // private list # symbolt to access and to  set
+  #products = [
     new Product(
       'A Pillow',
       'https://www.maxpixel.net/static/photo/2x/Soft-Pillow-Green-Decoration-Deco-Snuggle-1241878.jpg',
@@ -115,7 +123,7 @@ class ProductList extends Component {
   }
   render (){
     this.createComponent("ul", "product-list", [new ElementAttribute ("id", "prod-list")]);
-    for (const prod of this.products) {
+    for (const prod of this.#products) {
       const productItem = new ProductItem(prod, "prod-list");
       productItem.render();
     }
